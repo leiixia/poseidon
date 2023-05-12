@@ -10,69 +10,76 @@ import java.sql.Timestamp;
 public class Trade {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     private int tradeId;
 
-    @Column(name= "account", length = 100, nullable= false)
+    @Column(name= "account", length = 30, nullable= false)
     private String account;
 
-    @Column(name= "type", length = 100, nullable= false)
+    @Column(name= "type", length = 30, nullable= false)
     private String type;
 
-    @Column(name= "buyQuantity", length = 100, nullable= false)
+    @Column(name= "buyQuantity")
     private double buyQuantity;
 
-    @Column(name= "sellQuantity", length = 100, nullable= false)
+    @Column(name= "sellQuantity")
     private double sellQuantity;
 
-    @Column(name= "buyPrice", length = 100, nullable= false)
+    @Column(name= "buyPrice")
     private double buyPrice;
 
-    @Column(name= "sellPrice", length = 100, nullable= false)
+    @Column(name= "sellPrice")
     private double sellPrice;
 
-    @Column(name= "benchmark", length = 100, nullable= false)
+    @Column(name= "benchmark", length = 125)
     private String benchmark;
 
-    @Column(name= "tradeDate", length = 100, nullable= false)
+    @Column(name= "tradeDate")
     private Timestamp tradeDate;
 
-    @Column(name= "security", length = 100, nullable= false)
+    @Column(name= "security", length = 125)
     private String security;
 
-    @Column(name= "status", length = 100, nullable= false)
+    @Column(name= "status", length = 10)
     private String status;
 
-    @Column(name= "trader", length = 100, nullable= false)
+    @Column(name= "trader", length = 125)
     private String trader;
 
-    @Column(name= "book", length = 100, nullable= false)
+    @Column(name= "book", length = 125)
     private String book;
 
-    @Column(name= "creationName", length = 100, nullable= false)
+    @Column(name= "creationName", length = 125)
     private String creationName;
 
-    @Column(name= "creationDate", length = 100, nullable= false)
+    @Column(name= "creationDate")
     private Timestamp creationDate;
 
-    @Column(name= "revisionName", length = 100, nullable= false)
+    @Column(name= "revisionName", length = 125)
     private String revisionName;
 
-    @Column(name= "revisionDate", length = 100, nullable= false)
+    @Column(name= "revisionDate")
     private Timestamp revisionDate;
 
-    @Column(name= "dealName", length = 100, nullable= false)
+    @Column(name= "dealName", length = 125)
     private String dealName;
 
-    @Column(name= "dealType", length = 100, nullable= false)
+    @Column(name= "dealType", length = 125)
     private String dealType;
 
-    @Column(name= "sourceListId", length = 100, nullable= false)
+    @Column(name= "sourceListId", length = 125)
     private String sourceListId;
 
-    @Column(name= "side", length = 100, nullable= false)
+    @Column(name= "side", length = 125)
     private String side;
 
+    public Trade(){
+    }
 
+    public Trade(String account, String type) {
+        this.account = account;
+        this.type = type;
+    }
 
 
     public Integer getTradeId() {
@@ -241,5 +248,12 @@ public class Trade {
 
     public void setSide(String side) {
         this.side = side;
+    }
+
+
+
+    public Trade(Trade trade) {
+        this.account = trade.getAccount();
+        this.type = trade.getType();
     }
 }

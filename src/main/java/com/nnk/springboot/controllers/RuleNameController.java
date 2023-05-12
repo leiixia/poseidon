@@ -2,7 +2,6 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,25 +23,26 @@ public class RuleNameController {
     @RequestMapping("/ruleName/list")
     public String home(Model model)
     {
-        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        model.addAttribute("ruleName", ruleNameRepository.findAll());
         log.info("List of ruleNames items.");
         return "ruleName/list";
     }
 
     @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleName bid) {
+    public String addRuleForm(RuleName ruleName) {
         return "ruleName/add";
     }
 
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            log.error("Creation failed for ruleNames item.");
+        if (result.hasErrors()) {
+            log.error("Creation failed for ruleNames item." + ruleName.getId());
             return "redirect:/ruleName/list";
         }
-        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        ruleNameRepository.save(ruleName);
+        model.addAttribute("ruleName", ruleNameRepository.findAll());
         log.info("Creation success, return ruleNames list items.");
-        return "ruleName/add";
+        return "ruleName/list";
     }
 
     @GetMapping("/ruleName/update/{id}")
@@ -56,7 +56,7 @@ public class RuleNameController {
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                                  BindingResult result, Model model) {
         if (result.hasErrors()) {
-            log.error("Validation failed for ruleName item.");
+            log.error("Validation failed for ruleName item." + ruleName.getId());
             return "ruleName/update";
         }
         ruleName.setId(id);

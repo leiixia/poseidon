@@ -1,5 +1,8 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.DTO.UserDTO;
+import com.nnk.springboot.constraint.ValidPassword;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -17,6 +20,15 @@ public class User {
     private String fullname;
     @NotBlank(message = "Role is mandatory")
     private String role;
+
+    public User() {
+    }
+    public User(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.fullname = userDTO.getFullname();
+        this.role = userDTO.getRole();
+    }
 
     public Integer getId() {
         return id;

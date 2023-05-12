@@ -2,10 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +20,6 @@ public class CurveController {
     @Autowired
     private CurvePointRepository curvePointRepository;
 
-
     @RequestMapping("/curvePoint/list")
     public String home(Model model)
     {
@@ -32,20 +29,20 @@ public class CurveController {
     }
 
     @GetMapping("/curvePoint/add")
-    public String addBidForm(CurvePoint bid) {
+    public String addCurvePointForm(CurvePoint curvePoint) {
         return "curvePoint/add";
     }
 
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            log.error("Creation failed for curvePoint item.");
+        if (result.hasErrors()) {
+            log.error("Creation failed for curvePoint item." + curvePoint.getCurveId());
             return "redirect:/curvePoint/list";
         }
         curvePointRepository.save(curvePoint);
         model.addAttribute("curvePoints", curvePointRepository.findAll());
         log.info("Creation success, return curvePoint list items.");
-        return "curvePoint/add";
+        return "curvePoint/list";
     }
 
     @GetMapping("/curvePoint/update/{id}")
@@ -59,7 +56,7 @@ public class CurveController {
     public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                             BindingResult result, Model model) {
         if (result.hasErrors()) {
-            log.error("Validation failed for curvePoint item.");
+            log.error("Validation failed for curvePoint item." + curvePoint.getCurveId());
             return "curvePoint/update";
         }
         curvePoint.setCurveId(id);

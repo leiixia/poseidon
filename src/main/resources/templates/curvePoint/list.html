@@ -4,16 +4,17 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>Home</title>
-	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+
 </head>
 <body>
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+			<a href="/bidList/list">Bid List</a>&nbsp;|
+			<a href="/curvePoint/list">Curve Points</a>&nbsp;|
+			<a href="/rating/list">Ratings</a>&nbsp;|
+			<a href="/trade/list">Trade</a>&nbsp;|
 			<a href="/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
@@ -25,7 +26,9 @@
 	</div>
 	<div class="row"><h2>Curve Point List</h2></div>
 	<div class="row">
+
 		<a href="/curvePoint/add" class="btn btn-primary btn-sm">Add New</a>
+
 		<table class="table table-bordered">
 			<thead>
 			<tr>
@@ -37,14 +40,19 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr th:each="user : ${curvePoints}">
-				<td style="width: 10%" th:text="${curvePoint.curvePointListId}"></td>
+			<tr th:each="curvePoint : ${curvePoint}">
+				<td style="width: 10%" th:text="${curvePoint.id}"></td>
 				<td th:text="${curvePoint.curveId}"></td>
 				<td th:text="${curvePoint.term}"></td>
 				<td th:text="${curvePoint.value}"></td>
-				<a th:href="@{curvePoint/update/{id}(id=${curvePoint.curvePointId})}">Edit</a>
-				<a th:href="@{curvePoint/delete/{id}(id=${curvePoint.curvePointId})}">Delete</a>
+				<td>
+					<a class="btn btn-primary btn-sm"
+					   th:href="@{update/{id}(id=${curvePoint.id})}">Edit</a>
+					<a class="btn btn-danger btn-sm"
+					   th:href="@{delete/{id}(id=${curvePoint.id})}">Delete</a>
+				</td>
 			</tbody>
+
 		</table>
 	</div>
 </div>

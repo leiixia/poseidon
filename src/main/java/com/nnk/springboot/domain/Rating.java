@@ -1,29 +1,36 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "rating")
 public class Rating {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     private int id;
 
-    @Column(name= "moodysRating", length = 100, nullable= false)
+    @Column(name= "moodysRating", length = 125)
     private String moodysRating;
 
-    @Column(name= "sandRating", length= 100, nullable= false)
-    private String sandRating;
+    @Column(name= "sandPRating", length= 125)
+    private String sandPRating;
 
-
-    @Column(name= "fitchRating", length= 100, nullable= false)
+    @Column(name= "fitchRating", length= 125)
     private String fitchRating;
 
-    @Column(name= "orderNumber", length= 100, nullable= false)
+    @Column(name= "orderNumber")
     private Integer orderNumber;
+
+    public Rating(){
+    }
+    public Rating(String moodys_rating, String sand_pRating, String fitch_rating, int orderNumber) {
+        this.moodysRating = moodys_rating;
+        this.sandPRating = sand_pRating;
+        this.fitchRating = fitch_rating;
+        this.orderNumber = orderNumber;
+    }
 
     public int getId() {
         return id;
@@ -41,12 +48,12 @@ public class Rating {
         this.moodysRating = moodysRating;
     }
 
-    public String getSandRating() {
-        return sandRating;
+    public String getSandPRating() {
+        return sandPRating;
     }
 
-    public void setSandRating(String sandRating) {
-        this.sandRating = sandRating;
+    public void setSandPRating(String sandPRating) {
+        this.sandPRating = sandPRating;
     }
 
     public String getFitchRating() {

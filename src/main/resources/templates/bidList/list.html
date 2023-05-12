@@ -5,6 +5,7 @@
 	<meta charset="utf-8"/>
 	<title>Home</title>
 	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+
 </head>
 <body>
 <div class="container">
@@ -37,13 +38,17 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr th:each="user : ${bids}">
+			<tr th:each="bid : ${bidList}">
 				<td style="width: 10%" th:text="${bid.bidListId}"></td>
 				<td th:text="${bid.account}"></td>
 				<td th:text="${bid.type}"></td>
 				<td th:text="${bid.bidQuantity}"></td>
-				<a th:href="@{bid/update/{id}(id=${bid.bidListId})}">Edit</a>
-				<a th:href="@{bid/delete/{id}(id=${bid.bidListId})}">Delete</a>
+				<td>
+					<a class="btn btn-primary btn-sm"
+					   th:href="@{update/{id}(id=${bid.bidListId})}">Edit</a>
+					<a class="btn btn-danger btn-sm"
+					   th:href="@{delete/{id}(id=${bid.bidListId})}">Delete</a>
+				</td>
 			</tbody>
 		</table>
 	</div>

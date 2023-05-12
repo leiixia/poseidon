@@ -1,12 +1,8 @@
 package com.nnk.springboot.domain;
 
 
-import org.springframework.beans.factory.annotation.Required;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import java.sql.Date;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,80 +13,87 @@ import javax.persistence.Table;
 @Table(name = "bidlist")
 public class BidList {
 
-
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int BidListId;
 
-    @Column(name= "account", length = 100, nullable= false)
+    @Column(name = "account", length = 30, nullable = false)
     private String account;
 
-    @Column(name= "type", length= 100, nullable= false)
+    @Column(name = "type", length = 30, nullable = false)
     private String type;
 
-    @Column(name= "bidQuantity", length= 100, nullable= false)
+    @Column(name = "bidQuantity")
     private double bidQuantity;
 
-    @Column(name= "askQuantity", length= 100, nullable= false)
+    @Column(name = "askQuantity")
     private double askQuantity;
 
-    @Column(name= "bid", length= 100, nullable= false)
+    @Column(name = "bid")
     private double bid;
 
-    @Column(name= "ask", length= 100, nullable= false)
+    @Column(name = "ask")
     private double ask;
 
-    @Column(name= "benchmark", length= 100, nullable= false)
+    @Column(name = "benchmark", length = 125)
     private String benchmark;
 
-    @Column(name= "bidListDate", length= 100, nullable= false)
+    @Column(name = "bidListDate")
     private Timestamp bidListDate;
 
-    @Column(name= "commentary", length= 100, nullable= false)
+    @Column(name = "commentary", length = 125)
     private String commentary;
 
-    @Column(name= "security", length= 100, nullable= false)
+    @Column(name = "security", length = 125)
     private String security;
 
-    @Column(name= "status", length= 100, nullable= false)
+    @Column(name = "status", length = 10)
     private String status;
 
-    @Column(name= "trader", length= 100, nullable= false)
+    @Column(name = "trader", length = 125)
     private String trader;
 
-    @Column(name= "book", length= 100, nullable= false)
+    @Column(name = "book", length = 125)
     private String book;
 
-    @Column(name= "creationName", length= 100, nullable= false)
+    @Column(name = "creationName", length = 125)
     private String creationName;
 
-    @Column(name= "creationDate", length= 100, nullable= false)
+    @Column(name = "creationDate")
     private Timestamp creationDate;
 
-    @Column(name= "revisionName", length= 100, nullable= false)
+    @Column(name = "revisionName", length = 125)
     private String revisionName;
 
-    @Column(name= "revisionDate", length= 100, nullable= false)
+    @Column(name = "revisionDate")
     private Timestamp revisionDate;
 
-    @Column(name= "dealName", length= 100, nullable= false)
+    @Column(name = "dealName", length = 125)
     private String dealName;
 
-    @Column(name= "dealType", length= 100, nullable= false)
+    @Column(name = "dealType", length = 125)
     private String dealType;
 
-    @Column(name= "sourceListId", length= 100, nullable= false)
+    @Column(name = "sourceListId", length = 125)
     private String sourceListId;
 
-    @Column(name= "side",length= 100, nullable= false)
+    @Column(name = "side", length = 125)
     private String side;
 
+    public BidList(){
+    }
 
+    public BidList(String account, String type, Double bidQuantity ) {
+        this.account = account;
+        this.type = type;
+        this.bidQuantity = bidQuantity;
+    }
 
-    public Integer getBidListId() {
+    public int getBidListId() {
         return BidListId;
     }
 
-    public void setBidListId(Integer bidListId) {
+    public void setBidListId(int bidListId) {
         this.BidListId = bidListId;
     }
 
@@ -261,4 +264,7 @@ public class BidList {
     public void setSide(String side) {
         this.side = side;
     }
+
+
+
 }

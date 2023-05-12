@@ -2,10 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,19 +29,21 @@ public class TradeController {
     }
 
     @GetMapping("/trade/add")
-    public String addUser(Trade bid) {
+    public String addUser(Trade trade) {
+
         return "trade/add";
     }
 
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            log.error("Creation failed for trade item.");
+        if (result.hasErrors()) {
+            log.error("Creation failed for trade item." + trade.getTradeId());
             return "redirect:/trade/list";
         }
-        model.addAttribute("trades", tradeRepository.findAll());
-        log.info("Creaction success, return trade list items.");
-        return "trade/add";
+        tradeRepository.save(trade);
+        model.addAttribute("trade", tradeRepository.findAll());
+        log.info("Creation success, return trade list items.");
+        return "trade/list";
     }
 
     @GetMapping("/trade/update/{id}")
@@ -57,7 +57,7 @@ public class TradeController {
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                               BindingResult result, Model model) {
         if (result.hasErrors()) {
-            log.error("Validation failed for trade item.");
+            log.error("Validation failed for trade item." + trade.getTradeId());
             return "trade/update";
         }
         trade.setTradeId(id);
@@ -72,7 +72,7 @@ public class TradeController {
         Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         tradeRepository.delete(trade);
         log.info("Delete trade item.");
-        model.addAttribute("trades", tradeRepository.findAll());
+        model.addAttribute("trade", tradeRepository.findAll());
         return "redirect:/trade/list";
     }
 }

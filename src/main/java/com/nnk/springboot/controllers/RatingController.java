@@ -2,7 +2,6 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,7 @@ public class RatingController {
     public String home(Model model)
     {
         model.addAttribute("ratings", ratingRepository.findAll());
-        log.info("Lsit of rating items.");
+        log.info("List of rating items.");
         return "rating/list";
     }
 
@@ -36,13 +35,14 @@ public class RatingController {
 
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            log.error("Creation failed for rating item.");
+        if (result.hasErrors()) {
+            log.error("Creation failed for rating item." + rating.getId());
             return "redirect:/rating/list";
         }
+        ratingRepository.save(rating);
         model.addAttribute("ratings", ratingRepository.findAll());
         log.info("Creation succes, return rating list items.");
-        return "rating/add";
+        return "rating/list";
     }
 
     @GetMapping("/rating/update/{id}")
@@ -56,7 +56,7 @@ public class RatingController {
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                                BindingResult result, Model model) {
         if (result.hasErrors()) {
-            log.error("Validation failed for rating item.");
+            log.error("Validation failed for rating item." + rating.getId());
             return "rating/update";
         }
         rating.setId(id);

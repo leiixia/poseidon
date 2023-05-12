@@ -1,10 +1,6 @@
 package com.nnk.springboot.domain;
 
-import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -13,22 +9,32 @@ import java.sql.Timestamp;
 public class CurvePoint {
 
     @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     private int id;
 
-    @Column(name= "curveId", length = 100, nullable= false)
+    @Column(name= "curveId")
     private int curveId;
 
-    @Column(name= "asOfDate", length= 100, nullable= false)
+    @Column(name= "asOfDate")
     private Timestamp asOfDate;
 
-    @Column(name= "term", length= 100, nullable= false)
+    @Column(name= "term")
     private double term;
 
-    @Column(name= "value", length= 100, nullable= false)
+    @Column(name= "value")
     private double value;
 
-    @Column(name= "creationDate", length= 100, nullable= false)
+    @Column(name= "creationDate")
     private Timestamp creationDate;
+
+    public CurvePoint() {
+    }
+
+    public CurvePoint(int curveId, double term, double value) {
+        this.curveId = curveId;
+        this.term = term;
+        this.value = value;
+    }
 
     public Integer getId() {
         return id;
@@ -77,4 +83,5 @@ public class CurvePoint {
     public void setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
     }
+
 }
