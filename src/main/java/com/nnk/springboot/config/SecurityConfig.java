@@ -22,8 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 import java.util.Arrays;
 
 @Configuration
@@ -47,7 +45,6 @@ public class SecurityConfig  {
 
 
     @Bean
-    @ExceptionHandler
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/user/list", "/user/validate", "/user/add", "/css/*")
