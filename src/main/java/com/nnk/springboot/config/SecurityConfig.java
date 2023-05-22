@@ -20,7 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Arrays;
 
@@ -45,18 +47,19 @@ public class SecurityConfig  {
 
 
     @Bean
+    @ExceptionHandler
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/user/list", "/user/validate", "/user/add", "/css/*")
                 .permitAll()
-                .antMatchers("/admin/home")
+                .antMatchers("/bidList/list")
                 .hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-
+                .failureUrl("/login?error")
                 .defaultSuccessUrl("/bidList/list")
-                .failureUrl("/login?error=true")
+
                 .permitAll()
 
                 .and()

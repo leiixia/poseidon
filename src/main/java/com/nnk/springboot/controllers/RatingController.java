@@ -35,14 +35,14 @@ public class RatingController {
 
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error("Creation failed for rating item." + rating.getId());
+        if (!result.hasErrors()) {
+            ratingRepository.save(rating);
+            model.addAttribute("ratings", ratingRepository.findAll());
+            log.info("Creation success, return rating list items.");
             return "redirect:/rating/list";
         }
-        ratingRepository.save(rating);
-        model.addAttribute("ratings", ratingRepository.findAll());
-        log.info("Creation succes, return rating list items.");
-        return "rating/list";
+        log.error("Creation failed for rating item." + rating.getId());
+        return "rating/add";
     }
 
     @GetMapping("/rating/update/{id}")

@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 
@@ -12,13 +13,13 @@ public class Trade {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private int tradeId;
-
+    @NotBlank(message = "account is mandatory")
     @Column(name= "account", length = 30, nullable= false)
     private String account;
-
+    @NotBlank(message = "type is mandatory")
     @Column(name= "type", length = 30, nullable= false)
     private String type;
-
+    @NotNull(message = "buyQuantity is mandatory")
     @Column(name= "buyQuantity")
     private double buyQuantity;
 

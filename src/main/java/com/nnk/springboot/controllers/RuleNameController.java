@@ -35,14 +35,14 @@ public class RuleNameController {
 
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error("Creation failed for ruleNames item." + ruleName.getId());
+        if (!result.hasErrors()) {
+            ruleNameRepository.save(ruleName);
+            model.addAttribute("ruleName", ruleNameRepository.findAll());
+            log.info("Creation success, return ruleNames list items.");
             return "redirect:/ruleName/list";
         }
-        ruleNameRepository.save(ruleName);
-        model.addAttribute("ruleName", ruleNameRepository.findAll());
-        log.info("Creation success, return ruleNames list items.");
-        return "ruleName/list";
+        log.error("Creation failed for ruleNames item." + ruleName.getId());
+        return "ruleName/add";
     }
 
     @GetMapping("/ruleName/update/{id}")

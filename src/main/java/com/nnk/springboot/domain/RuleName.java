@@ -1,10 +1,10 @@
 package com.nnk.springboot.domain;
 
-import org.passay.Rule;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "rulename")
@@ -13,22 +13,22 @@ public class RuleName {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private int id;
-
+    @NotBlank(message = "name is mandatory")
     @Column(name= "name", length = 125)
     private String name;
-
+    @NotBlank(message = "description is mandatory")
     @Column(name= "description", length = 125)
     private String description;
-
+    @NotBlank(message = "json is mandatory")
     @Column(name= "json", length = 125)
     private String json;
-
+    @NotBlank(message = "template is mandatory")
     @Column(name= "template", length = 512)
     private String template;
-
+    @NotBlank(message = "sqlStr is mandatory")
     @Column(name= "sqlStr", length = 125)
     private String sqlStr;
-
+    @NotBlank(message = "sqlPart is mandatory")
     @Column(name= "sqlPart", length = 125)
     private String sqlPart;
 

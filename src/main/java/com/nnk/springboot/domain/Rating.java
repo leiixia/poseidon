@@ -1,6 +1,8 @@
 package com.nnk.springboot.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -10,16 +12,17 @@ public class Rating {
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
     private int id;
-
+    @NotBlank(message = "moodysRating is mandatory")
     @Column(name= "moodysRating", length = 125)
     private String moodysRating;
-
+    @NotBlank(message = "sandPRating is mandatory")
     @Column(name= "sandPRating", length= 125)
     private String sandPRating;
-
+    @NotBlank(message = "fitchRating is mandatory")
     @Column(name= "fitchRating", length= 125)
     private String fitchRating;
 
+    @NotNull
     @Column(name= "orderNumber")
     private Integer orderNumber;
 

@@ -35,14 +35,14 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error("Creation failed for bid item." + bid.getBidListId());
+        if (!result.hasErrors()) {
+            bidListRepository.save(bid);
+            model.addAttribute("bids", bidListRepository.findAll());
+            log.info("Creation success, return bid list items.");
             return "redirect:/bidList/list";
         }
-        bidListRepository.save(bid);
-        model.addAttribute("bids", bidListRepository.findAll());
-        log.info("Creation success, return bid list items.");
-        return "bidList/list";
+        log.error("Creation failed for bid item." + bid.getBidListId());
+        return "bidList/add";
     }
 
     @GetMapping("/bidList/update/{id}")

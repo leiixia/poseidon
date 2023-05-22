@@ -35,14 +35,14 @@ public class CurveController {
 
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error("Creation failed for curvePoint item." + curvePoint.getCurveId());
+        if (!result.hasErrors()) {
+            curvePointRepository.save(curvePoint);
+            model.addAttribute("curvePoints", curvePointRepository.findAll());
+            log.info("Creation success, return curvePoint list items.");
             return "redirect:/curvePoint/list";
         }
-        curvePointRepository.save(curvePoint);
-        model.addAttribute("curvePoints", curvePointRepository.findAll());
-        log.info("Creation success, return curvePoint list items.");
-        return "curvePoint/list";
+        log.error("Creation failed for curvePoint item." + curvePoint.getCurveId());
+        return "curvePoint/add";
     }
 
     @GetMapping("/curvePoint/update/{id}")

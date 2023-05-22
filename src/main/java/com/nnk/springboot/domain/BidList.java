@@ -2,12 +2,16 @@ package com.nnk.springboot.domain;
 
 
 
+
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.*;
+
 
 @Entity
 @Table(name = "bidlist")
@@ -16,13 +20,14 @@ public class BidList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int BidListId;
-
+    @NotBlank(message = "Account is mandatory.")
     @Column(name = "account", length = 30, nullable = false)
     private String account;
-
+    @NotBlank(message = "Type is mandatory.")
     @Column(name = "type", length = 30, nullable = false)
     private String type;
-
+    @Positive(message = "Quantiry must be positive.")
+    @NotNull(message = "bidQuantity is mandatory.")
     @Column(name = "bidQuantity")
     private double bidQuantity;
 

@@ -36,14 +36,14 @@ public class TradeController {
 
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error("Creation failed for trade item." + trade.getTradeId());
+        if (!result.hasErrors()) {
+            tradeRepository.save(trade);
+            model.addAttribute("trade", tradeRepository.findAll());
+            log.info("Creation success, return trade list items.");
             return "redirect:/trade/list";
         }
-        tradeRepository.save(trade);
-        model.addAttribute("trade", tradeRepository.findAll());
-        log.info("Creation success, return trade list items.");
-        return "trade/list";
+        log.error("Creation failed for trade item." + trade.getTradeId());
+        return "trade/add";
     }
 
     @GetMapping("/trade/update/{id}")
